@@ -1,0 +1,41 @@
+Arboles de decisión
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.metrics import accuracy_score
+
+arbol = pd.read_csv("C:/Users/luciana H/Desktop/YulietMira/UNIVERSIDAD/SEMESTRE 5/ANALISIS DE DATOS/Etapa 2/wine.csv", sep=",")
+arbol.head()
+
+arbol.shape
+
+arbol.describe()
+
+plt.hist(arbol.clase)
+
+predictors_wi = ["alcohol", "malic_acid", "ash", "alcalinityOfAsh"]
+target_wi = ['clase']
+
+predictors = arbol[predictors_wi]
+target = arbol[target_wi]
+
+X_train, X_test, y_train, y_test = train_test_split(predictors, target, test_size=0.25, random_state=13)
+
+tree = DecisionTreeClassifier()
+
+arbolWine = tree.fit(X_train, y_train)
+
+plot_tree(arbolWine)
+
+prediccion = arbolWine.predict(X_test)
+
+pd.crosstab(np.array([y[0] for y in y_test.values.tolist()]), prediccion, rownames=['Actual'], colnames=['Predicciones'])
+
+accuracy = acuracy_score(y_test,prediccion)
+accuracy
+
+
+
